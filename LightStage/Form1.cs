@@ -30,6 +30,8 @@ namespace LightStage
         {
             InitializeComponent();
 
+            if (ConfigurationManager.AppSettings["CaptureOnScan"].ToUpper() == "TRUE") { this.AcceptButton = button1; }
+
             resetBackColor();
             camera1.BackColor = Color.LawnGreen;
 
@@ -126,7 +128,7 @@ namespace LightStage
                 try
                 {
                     img = capture0.QueryFrame();
-                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + "_1.jpg");
+                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam1"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
                 catch { }
@@ -134,7 +136,7 @@ namespace LightStage
                 try
                 {
                     img = capture1.QueryFrame();
-                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + "_2.jpg");
+                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam2"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
                 catch { }
@@ -142,7 +144,7 @@ namespace LightStage
                 try
                 {
                     img = capture2.QueryFrame();
-                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + "_3.jpg");
+                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam3"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
                 catch { }
@@ -150,7 +152,7 @@ namespace LightStage
                 try
                 {
                     img = capture3.QueryFrame();
-                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + "_4.jpg");
+                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam4"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
                 catch { }
@@ -158,10 +160,12 @@ namespace LightStage
                 try
                 {
                     img = capture4.QueryFrame();
-                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + "_5.jpg");
+                    img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam5"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
                 catch { }
+
+                if (ConfigurationManager.AppSettings["ClearTextAfterCapture"].ToUpper() == "TRUE") { serialTextBox.Text = ""; }
 
             }
             else { MessageBox.Show("Serial Number Cannot Be Blank", "Warning"); }
