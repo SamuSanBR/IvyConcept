@@ -2,6 +2,7 @@
 //
 // Capture multple angle pictures automatically
 // and save them to a shared folder
+// Requires computer with multiple USB controllers due to bandwidth requirements
 //
 // Mark Bowling
 // May 2019
