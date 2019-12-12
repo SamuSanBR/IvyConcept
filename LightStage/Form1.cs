@@ -20,11 +20,11 @@ namespace LightStage
     public partial class Form1 : Form
     {
         int activeCamera = 1;
-        VideoCapture capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]));
-        VideoCapture capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]));
-        VideoCapture capture2 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera3"]));
-        VideoCapture capture3 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera4"]));
-        VideoCapture capture4 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera5"]));
+        VideoCapture capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
+        VideoCapture capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]), VideoCapture.API.DShow);
+        VideoCapture capture2 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera3"]), VideoCapture.API.DShow);
+        VideoCapture capture3 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera4"]), VideoCapture.API.DShow);
+        VideoCapture capture4 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera5"]), VideoCapture.API.DShow);
 
         public Form1()
         {
