@@ -20,32 +20,55 @@ namespace LightStage
     public partial class Form1 : Form
     {
         int activeCamera = 1;
-        VideoCapture capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
-        VideoCapture capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]), VideoCapture.API.DShow);
-        VideoCapture capture2 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera3"]), VideoCapture.API.DShow);
-        VideoCapture capture3 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera4"]), VideoCapture.API.DShow);
-        VideoCapture capture4 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera5"]), VideoCapture.API.DShow);
+
+        VideoCapture capture0 = null;
+        VideoCapture capture1 = null;
+        VideoCapture capture2 = null;
+        VideoCapture capture3 = null;
+        VideoCapture capture4 = null;
+
 
         public Form1()
         {
             InitializeComponent();
-
             if (ConfigurationManager.AppSettings["CaptureOnScan"].ToUpper() == "TRUE") { this.AcceptButton = button1; }
 
             resetBackColor();
             camera1.BackColor = Color.LawnGreen;
 
             //camera settings
+            capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
             capture0.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera1X"]));
             capture0.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera1Y"]));
-            capture1.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2X"])); 
-            capture1.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2Y"]));
-            capture2.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera3X"]));
-            capture2.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera3Y"]));
-            capture3.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera4X"]));
-            capture3.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera4Y"]));
-            capture4.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera5X"]));
-            capture4.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera5Y"]));
+
+            if (ConfigurationManager.AppSettings["Camera2"] != "" && ConfigurationManager.AppSettings["Camera2"] != null)
+            {
+                capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]), VideoCapture.API.DShow);
+                capture1.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2X"]));
+                capture1.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2Y"]));
+                camera2.Visible = true;
+            }
+            if (ConfigurationManager.AppSettings["Camera3"] != "" && ConfigurationManager.AppSettings["Camera3"] != null)
+            {
+                capture2 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera3"]), VideoCapture.API.DShow);
+                capture2.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera3X"]));
+                capture2.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera3Y"]));
+                camera3.Visible = true;
+            }
+            if (ConfigurationManager.AppSettings["Camera4"] != "" && ConfigurationManager.AppSettings["Camera4"] != null)
+            {
+                capture3 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera4"]), VideoCapture.API.DShow);
+                capture3.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera4X"]));
+                capture3.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera4Y"]));
+                camera4.Visible = true;
+            }
+            if (ConfigurationManager.AppSettings["Camera5"] != "" && ConfigurationManager.AppSettings["Camera5"] != null)
+            {
+                capture4 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera5"]), VideoCapture.API.DShow);
+                capture4.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera5X"]));
+                capture4.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera5Y"]));
+                camera5.Visible = true;
+            }
 
             Application.Idle += new EventHandler(delegate (object sender, EventArgs e)
             {
@@ -100,7 +123,7 @@ namespace LightStage
 
         private void resetBackColor()        
         {
-            foreach (Control button in Controls)
+            foreach (Control button in panel2.Controls)
             {
                 if (button is Button) { ((Button)button).BackColor = Color.LightGray; }
             }

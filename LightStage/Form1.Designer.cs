@@ -38,24 +38,29 @@
             this.camera3 = new System.Windows.Forms.Button();
             this.camera5 = new System.Windows.Forms.Button();
             this.camera4 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageBox1
             // 
             this.imageBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.imageBox1.Location = new System.Drawing.Point(13, 110);
-            this.imageBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.imageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageBox1.Location = new System.Drawing.Point(0, 0);
+            this.imageBox1.Margin = new System.Windows.Forms.Padding(4);
             this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(1564, 864);
+            this.imageBox1.Size = new System.Drawing.Size(1593, 1062);
             this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             // 
             // camera1
             // 
-            this.camera1.Location = new System.Drawing.Point(555, 997);
-            this.camera1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.camera1.Location = new System.Drawing.Point(534, 14);
+            this.camera1.Margin = new System.Windows.Forms.Padding(4);
             this.camera1.Name = "camera1";
             this.camera1.Size = new System.Drawing.Size(92, 50);
             this.camera1.TabIndex = 3;
@@ -65,19 +70,20 @@
             // 
             // camera2
             // 
-            this.camera2.Location = new System.Drawing.Point(654, 997);
-            this.camera2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.camera2.Location = new System.Drawing.Point(633, 14);
+            this.camera2.Margin = new System.Windows.Forms.Padding(4);
             this.camera2.Name = "camera2";
             this.camera2.Size = new System.Drawing.Size(92, 50);
             this.camera2.TabIndex = 4;
             this.camera2.Text = "2";
             this.camera2.UseVisualStyleBackColor = true;
+            this.camera2.Visible = false;
             this.camera2.Click += new System.EventHandler(this.camera2_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1413, 997);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(1175, 14);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 50);
             this.button1.TabIndex = 5;
@@ -87,8 +93,8 @@
             // 
             // serialTextBox
             // 
-            this.serialTextBox.Location = new System.Drawing.Point(31, 62);
-            this.serialTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.serialTextBox.Location = new System.Drawing.Point(29, 51);
+            this.serialTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.serialTextBox.Name = "serialTextBox";
             this.serialTextBox.Size = new System.Drawing.Size(262, 29);
             this.serialTextBox.TabIndex = 6;
@@ -96,7 +102,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 31);
+            this.label1.Location = new System.Drawing.Point(29, 20);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(147, 25);
@@ -105,36 +111,63 @@
             // 
             // camera3
             // 
-            this.camera3.Location = new System.Drawing.Point(753, 997);
-            this.camera3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.camera3.Location = new System.Drawing.Point(732, 14);
+            this.camera3.Margin = new System.Windows.Forms.Padding(4);
             this.camera3.Name = "camera3";
             this.camera3.Size = new System.Drawing.Size(92, 50);
             this.camera3.TabIndex = 8;
             this.camera3.Text = "3";
             this.camera3.UseVisualStyleBackColor = true;
+            this.camera3.Visible = false;
             this.camera3.Click += new System.EventHandler(this.camera3_Click);
             // 
             // camera5
             // 
-            this.camera5.Location = new System.Drawing.Point(951, 997);
-            this.camera5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.camera5.Location = new System.Drawing.Point(930, 14);
+            this.camera5.Margin = new System.Windows.Forms.Padding(4);
             this.camera5.Name = "camera5";
             this.camera5.Size = new System.Drawing.Size(92, 50);
             this.camera5.TabIndex = 10;
             this.camera5.Text = "5";
             this.camera5.UseVisualStyleBackColor = true;
+            this.camera5.Visible = false;
             this.camera5.Click += new System.EventHandler(this.camera5_Click);
             // 
             // camera4
             // 
-            this.camera4.Location = new System.Drawing.Point(852, 997);
-            this.camera4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.camera4.Location = new System.Drawing.Point(831, 14);
+            this.camera4.Margin = new System.Windows.Forms.Padding(4);
             this.camera4.Name = "camera4";
             this.camera4.Size = new System.Drawing.Size(92, 50);
             this.camera4.TabIndex = 9;
             this.camera4.Text = "4";
             this.camera4.UseVisualStyleBackColor = true;
+            this.camera4.Visible = false;
             this.camera4.Click += new System.EventHandler(this.camera4_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.serialTextBox);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1593, 100);
+            this.panel1.TabIndex = 11;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.camera1);
+            this.panel2.Controls.Add(this.camera2);
+            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.camera5);
+            this.panel2.Controls.Add(this.camera3);
+            this.panel2.Controls.Add(this.camera4);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 994);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1593, 68);
+            this.panel2.TabIndex = 12;
             // 
             // Form1
             // 
@@ -142,23 +175,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1593, 1062);
-            this.Controls.Add(this.camera5);
-            this.Controls.Add(this.camera4);
-            this.Controls.Add(this.camera3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.serialTextBox);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.camera2);
-            this.Controls.Add(this.camera1);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.imageBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LightStage  1.0";
+            this.Text = "LightStage  1.2";
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -173,6 +202,8 @@
         private System.Windows.Forms.Button camera3;
         private System.Windows.Forms.Button camera5;
         private System.Windows.Forms.Button camera4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 
