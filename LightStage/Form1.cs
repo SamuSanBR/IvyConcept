@@ -3,9 +3,10 @@
 // Capture multple angle pictures automatically
 // and save them to a shared folder
 // Requires computer with multiple USB controllers due to bandwidth requirements
+// Added watermark support
 //
 // Mark Bowling
-// May 2019
+// Sept 2021
 
 using System;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System.Drawing;
 using System.IO;
+using Emgu.CV.Structure;
 
 namespace LightStage
 {
@@ -70,9 +72,12 @@ namespace LightStage
                 camera5.Visible = true;
             }
 
+
+            Mat img = new Mat();
+
             Application.Idle += new EventHandler(delegate (object sender, EventArgs e)
             {
-                Mat img = null;
+                
                 if (activeCamera == 1) { img = capture0.QueryFrame(); }
                 if (activeCamera == 2) { img = capture1.QueryFrame(); }
                 if (activeCamera == 3) { img = capture2.QueryFrame(); }
@@ -80,6 +85,11 @@ namespace LightStage
                 if (activeCamera == 5) { img = capture4.QueryFrame(); }
             
                 if (imageBox1.Image != null) { imageBox1.Image.Dispose(); }
+
+                if(ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                {
+                    img = waterMarkImage(img);
+                }
 
                 imageBox1.Image = img;
             });
@@ -151,6 +161,10 @@ namespace LightStage
                 try
                 {
                     img = capture0.QueryFrame();
+                    if (ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                    {
+                        img = waterMarkImage(img);
+                    }
                     img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam1"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
@@ -159,6 +173,10 @@ namespace LightStage
                 try
                 {
                     img = capture1.QueryFrame();
+                    if (ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                    {
+                        img = waterMarkImage(img);
+                    }
                     img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam2"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
@@ -167,6 +185,10 @@ namespace LightStage
                 try
                 {
                     img = capture2.QueryFrame();
+                    if (ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                    {
+                        img = waterMarkImage(img);
+                    }
                     img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam3"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
@@ -175,6 +197,10 @@ namespace LightStage
                 try
                 {
                     img = capture3.QueryFrame();
+                    if (ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                    {
+                        img = waterMarkImage(img);
+                    }
                     img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam4"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
@@ -183,6 +209,10 @@ namespace LightStage
                 try
                 {
                     img = capture4.QueryFrame();
+                    if (ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
+                    {
+                        img = waterMarkImage(img);
+                    }
                     img.Save(pictureDirectory + serialTextBox.Text + "\\" + serialTextBox.Text + ConfigurationManager.AppSettings["AppendCam5"] + ".jpg");
                     try { img.Dispose(); } catch { }
                 }
@@ -192,7 +222,34 @@ namespace LightStage
 
             }
             else { MessageBox.Show("Serial Number Cannot Be Blank", "Warning"); }
+            
+        }
 
+
+        public Mat waterMarkImage(Mat imageMat)
+        {
+            Mat waterMark = new Mat(ConfigurationManager.AppSettings["WatermarkLocation"]);
+            
+
+            Image<Bgr, Byte> newImage = imageMat.ToImage<Bgr, Byte>();
+            Image<Bgr, Byte> waterImage = waterMark.ToImage<Bgr, Byte>();
+            Image<Bgr, Byte> waterMarkedImage = imageMat.ToImage<Bgr, Byte>();
+
+            int x = 0;
+            int y = 0;
+            int w = waterMark.Width;
+            int h = waterMark.Height;
+            Rectangle rect = new Rectangle(x,y,w,h);
+
+            newImage.ROI = rect;
+            waterMarkedImage.ROI = rect;
+
+            CvInvoke.AddWeighted(newImage, .9, waterImage, .2, 0, waterMarkedImage);
+
+            newImage.Dispose();
+            waterImage.Dispose();
+
+            return waterMarkedImage.Mat;
         }
     }
 }
