@@ -229,7 +229,8 @@ namespace LightStage
         public Mat waterMarkImage(Mat imageMat)
         {
             Mat waterMark = new Mat(ConfigurationManager.AppSettings["WatermarkLocation"]);
-            
+
+            double betaChannel = Convert.ToDouble(ConfigurationManager.AppSettings["WaterMarkBeta"]);
 
             Image<Bgr, Byte> newImage = imageMat.ToImage<Bgr, Byte>();
             Image<Bgr, Byte> waterImage = waterMark.ToImage<Bgr, Byte>();
@@ -241,13 +242,18 @@ namespace LightStage
             int h = waterMark.Height;
             Rectangle rect = new Rectangle(x,y,w,h);
 
-            newImage.ROI = rect;
-            waterMarkedImage.ROI = rect;
+            try
+            {
+                newImage.ROI = rect;
+                waterMarkedImage.ROI = rect;
 
-            CvInvoke.AddWeighted(newImage, .9, waterImage, .2, 0, waterMarkedImage);
+                CvInvoke.AddWeighted(newImage, 1, waterImage, betaChannel, 1, waterMarkedImage);
 
-            newImage.Dispose();
-            waterImage.Dispose();
+                newImage.Dispose();
+                waterImage.Dispose();
+            }
+
+            catch { MessageBox.Show("Watermark larger than camera resolution!"); }
 
             return waterMarkedImage.Mat;
         }
