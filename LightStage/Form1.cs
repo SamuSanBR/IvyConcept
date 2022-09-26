@@ -100,7 +100,6 @@ namespace LightStage
                 //{
                 //    img = waterMarkImage(img);
                 //}
-
                 imageBox1.Image = img;
             });
             
