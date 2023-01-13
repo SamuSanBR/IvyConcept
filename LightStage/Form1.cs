@@ -19,26 +19,22 @@ using Emgu.CV.Structure;
 using System.Data;
 using System.Collections.Generic;
 using static LightStage.UsernameInsert;
+using Emgu.CV.UI;
 
-namespace LightStage 
+namespace LightStage
 {
 
-  
-    public partial class Form1 : Form 
+    public partial class Form1 : Form
     {
-        
-        int activeCamera = 1;
 
         VideoCapture capture0 = null;
         VideoCapture capture1 = null;
         //VideoCapture capture2 = null;
         //VideoCapture capture3 = null;
         //VideoCapture capture4 = null;
-
         public Form1()
         {
             InitializeComponent();
-
 
             User user = new User();
             userTextBox.Text = User.username;
@@ -87,35 +83,36 @@ namespace LightStage
 
             Application.Idle += new EventHandler(delegate (object sender, EventArgs e)
             {
-                
-                if (activeCamera == 1) { img = capture0.QueryFrame(); }
-                if (activeCamera == 2) { img = capture1.QueryFrame(); }
+
+                //if (activeCamera == 1) { img = capture0.QueryFrame(); }
+                //if (activeCamera == 2) { img = capture1.QueryFrame(); }
                 //if (activeCamera == 3) { img = capture2.QueryFrame(); }
                 //if (activeCamera == 4) { img = capture3.QueryFrame(); }
                 //if (activeCamera == 5) { img = capture4.QueryFrame(); }
 
-                if (imageBox1.Image != null) { imageBox1.Image.Dispose(); }
+                //if (imageBox1.Image != null) { imageBox1.Image.Dispose(); }
 
                 //if(ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
                 //{
                 //    img = waterMarkImage(img);
                 //}
-
-                imageBox1.Image = img;
+                imageBox1.Image = capture0.QueryFrame();
+                imageBox2.Image = capture1.QueryFrame();
             });
-            
+
         }
+
 
         private void camera1_Click(object sender, EventArgs e)
         {
-            activeCamera = 1;
+            //activeCamera = 1;
             resetBackColor();
             camera1.BackColor = Color.LawnGreen;
         }
 
         private void camera2_Click(object sender, EventArgs e)
         {
-            activeCamera = 2;
+            //activeCamera = 2;
             resetBackColor();
             camera2.BackColor = Color.LawnGreen;
         }
@@ -141,7 +138,7 @@ namespace LightStage
         //    camera5.BackColor = Color.LawnGreen;
         //} 
 
-        private void resetBackColor()        
+        private void resetBackColor()
         {
             foreach (Control button in panel2.Controls)
             {
@@ -178,6 +175,7 @@ namespace LightStage
                     //}
                     img.Save(pictureDirectory + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".jpg");
                     try { img.Dispose(); } catch { }
+
                     MessageBox.Show("Imagem 1 salva");
                 }
                 catch { }
@@ -235,7 +233,7 @@ namespace LightStage
 
             }
             else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -13,9 +13,13 @@ namespace LightStage
 {
     public partial class UsernameInsert : Form
     {
+        public static UsernameInsert instance;
+        public TextBox tb;
         public UsernameInsert()
         {
             InitializeComponent();
+            instance = this;
+            tb = txtUsername;
         }
         public class User
         {
@@ -26,20 +30,33 @@ namespace LightStage
         {
             try
             {
+
+                string UserAdmin = "EWERTON.CANDIDO";
                 if (string.IsNullOrEmpty(txtUsername.Text.Trim()))
                 {
-                    MessageBox.Show("Username inválido! Insira novamente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Nome de usuário inválido! Por favor, insira novamente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
                     User.username = txtUsername.Text;
-                    Form1 form1 = new Form1();
-                    Hide();
-                    form1.ShowDialog();
-                    Close();
+                    if (string.Compare(txtUsername.Text.Trim().ToUpper(), UserAdmin) == 0)
+                    {
+                        Form1 form1 = new Form1();
+                        MessageBox.Show("Bem vindo ADMIN", "Olá", MessageBoxButtons.OK);
+                        Hide();
+                        form1.ShowDialog();
+                        Close();
+                    }
+                    else
+                    {
+                        Form1 form1 = new Form1();
+                        Hide();
+                        form1.ShowDialog();
+                        Close();
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
