@@ -1,14 +1,4 @@
-﻿// LightStage
-//
-// Capture multple angle pictures automatically
-// and save them to a shared folder
-// Requires computer with multiple USB controllers due to bandwidth requirements
-// Added watermark support
-//
-// Mark Bowling
-// Sept 2021
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 using System.Configuration;
 using Emgu.CV;
@@ -20,6 +10,7 @@ using System.Data;
 using System.Collections.Generic;
 using static LightStage.UsernameInsert;
 using Emgu.CV.UI;
+using System.Linq.Expressions;
 
 namespace LightStage
 {
@@ -32,12 +23,17 @@ namespace LightStage
         //VideoCapture capture2 = null;
         //VideoCapture capture3 = null;
         //VideoCapture capture4 = null;
+        double totalFrames;
+        double fps;
+        VideoWriter videoWriter;
+        DateTime dateTime;
+        int i;
         public Form1()
         {
             InitializeComponent();
 
             User user = new User();
-            userTextBox.Text = User.username;
+            userTextBox.Text = User.username.ToUpper();
 
             if (ConfigurationManager.AppSettings["CaptureOnScan"].ToUpper() == "TRUE") { this.AcceptButton = button1; }
 
@@ -96,9 +92,33 @@ namespace LightStage
                 //{
                 //    img = waterMarkImage(img);
                 //}
-                imageBox1.Image = capture0.QueryFrame();
-                imageBox2.Image = capture1.QueryFrame();
+                try
+                {
+                    imageBox1.Image = capture0.QueryFrame();
+                }
+                catch
+                {
+                    MessageBox.Show("Câmera 1 não está conectada", "Erro");
+                    Application.Exit();
+                }
+                try {
+                    imageBox2.Image = capture1.QueryFrame();
+                }
+                catch {
+                    MessageBox.Show("Câmera 2 não está conectada", "Erro");
+                    Application.Exit();
+                }
+
             });
+
+            //if (capture0 == null && capture1 == null)
+            //{
+
+            //    capture0 = new Emgu.CV.VideoCapture(0);
+            //    capture1 = new Emgu.CV.VideoCapture(1);
+            //}
+            //capture0.ImageGrabbed += VideoCapture_ImageGrabbed;
+            //capture0.Start();
 
         }
 
@@ -254,6 +274,24 @@ namespace LightStage
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Filmar_Click(object sender, EventArgs e)
+        {
+            if (capture0 == null && capture1 == null)
+            {
+
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "Video Files *.mp4";
+
+                capture0 = new Emgu.CV.VideoCapture();
+                capture1 = new Emgu.CV.VideoCapture();
+
+            }
+            else
+            {
+
+            }
         }
 
 

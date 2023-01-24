@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace LightStage
             try
             {
 
-                string UserAdmin = "EWERTON.CANDIDO";
+                string UserAdmin = ConfigurationManager.AppSettings["Admin"];
                 if (string.IsNullOrEmpty(txtUsername.Text.Trim()))
                 {
                     MessageBox.Show("Nome de usuário inválido! Por favor, insira novamente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);

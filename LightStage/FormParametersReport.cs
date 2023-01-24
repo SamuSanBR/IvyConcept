@@ -16,6 +16,7 @@ using static System.Net.WebRequestMethods;
 using File = System.IO.File;
 using static LightStage.UsernameInsert;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Configuration;
 
 namespace LightStage
 {
@@ -28,7 +29,7 @@ namespace LightStage
             InitializeComponent();
             instance = this;
 
-            if ((UsernameInsert.instance.tb.Text).Trim().ToUpper() == "EWERTON.CANDIDO")
+            if ((UsernameInsert.instance.tb.Text).Trim().ToUpper() == ConfigurationManager.AppSettings["Admin"])
             {
                 btnDownload.Enabled = true;
             }
@@ -36,7 +37,7 @@ namespace LightStage
         }
 
         FolderBrowserDialog fbd1 = new FolderBrowserDialog();
-        String filePath = "C:\\Users\\samuel.cassan\\Desktop\\LightStage\\LightStage\\bin\\x64\\Debug\\Pictures";
+        String filePath = ConfigurationManager.AppSettings["SavePath"];
 
         //public Type Details(int? vesselId)
         //{
