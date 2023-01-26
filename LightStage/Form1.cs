@@ -1,33 +1,23 @@
-﻿// LightStage
-//
-// Capture multple angle pictures automatically
-// and save them to a shared folder
-// Requires computer with multiple USB controllers due to bandwidth requirements
-// Added watermark support
-//
-// Mark Bowling
-// Sept 2021
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 using System.Configuration;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System.Drawing;
 using System.IO;
-using Emgu.CV.Structure;
-using System.Data;
-using System.Collections.Generic;
 using static LightStage.UsernameInsert;
+using System.Diagnostics;
+using AForge.Video;
+using AForge.Video.DirectShow;
+using Accord.Video.FFMPEG;
+using AForge.Controls;
+using Emgu.CV.UI;
 
-namespace LightStage 
+namespace LightStage
 {
 
-  
-    public partial class Form1 : Form 
+    public partial class Form1 : Form
     {
-        
-        int activeCamera = 1;
 
         VideoCapture capture0 = null;
         VideoCapture capture1 = null;
@@ -38,15 +28,15 @@ namespace LightStage
         public Form1()
         {
             InitializeComponent();
-
+            videoSourcePlayer.Visible = false;
+            CloseCurrentVideoSource();
 
             User user = new User();
-            userTextBox.Text = User.username;
+            userTextBox.Text = User.username.ToUpper();
 
             if (ConfigurationManager.AppSettings["CaptureOnScan"].ToUpper() == "TRUE") { this.AcceptButton = button1; }
 
             resetBackColor();
-            camera1.BackColor = Color.LawnGreen;
 
             //camera settings
             capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
@@ -58,7 +48,6 @@ namespace LightStage
                 capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]), VideoCapture.API.DShow);
                 capture1.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2X"]));
                 capture1.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2Y"]));
-                camera2.Visible = true;
             }
             //if (ConfigurationManager.AppSettings["Camera3"] != "" && ConfigurationManager.AppSettings["Camera3"] != null)
             //{
@@ -82,41 +71,49 @@ namespace LightStage
             //    camera5.Visible = true;
             //}
 
-
-            Mat img = new Mat();
-
             Application.Idle += new EventHandler(delegate (object sender, EventArgs e)
             {
-                
-                if (activeCamera == 1) { img = capture0.QueryFrame(); }
-                if (activeCamera == 2) { img = capture1.QueryFrame(); }
+
+                //if (activeCamera == 1) { img = capture0.QueryFrame(); }
+                //if (activeCamera == 2) { img = capture1.QueryFrame(); }
                 //if (activeCamera == 3) { img = capture2.QueryFrame(); }
                 //if (activeCamera == 4) { img = capture3.QueryFrame(); }
                 //if (activeCamera == 5) { img = capture4.QueryFrame(); }
 
-                if (imageBox1.Image != null) { imageBox1.Image.Dispose(); }
+                //if (imageBox1.Image != null) { imageBox1.Image.Dispose(); }
 
                 //if(ConfigurationManager.AppSettings["AddWaterMark"].ToUpper() == "TRUE")
                 //{
                 //    img = waterMarkImage(img);
                 //}
-                imageBox1.Image = img;
+                try
+                {
+                    imageBox1.Image = capture0.QueryFrame();
+                }
+                catch
+                {
+                    MessageBox.Show("Câmera 1 não está conectada", "Erro");
+                    Application.Exit();
+                }
+                try {
+                    imageBox2.Image = capture1.QueryFrame();
+                }
+                catch {
+                    MessageBox.Show("Câmera 2 não está conectada", "Erro");
+                    Application.Exit();
+                }
+
             });
-            
-        }
 
-        private void camera1_Click(object sender, EventArgs e)
-        {
-            activeCamera = 1;
-            resetBackColor();
-            camera1.BackColor = Color.LawnGreen;
-        }
+            //if (capture0 == null && capture1 == null)
+            //{
 
-        private void camera2_Click(object sender, EventArgs e)
-        {
-            activeCamera = 2;
-            resetBackColor();
-            camera2.BackColor = Color.LawnGreen;
+            //    capture0 = new Emgu.CV.VideoCapture(0);
+            //    capture1 = new Emgu.CV.VideoCapture(1);
+            //}
+            //capture0.ImageGrabbed += VideoCapture_ImageGrabbed;
+            //capture0.Start();
+
         }
 
         //private void camera3_Click(object sender, EventArgs e)
@@ -140,7 +137,7 @@ namespace LightStage
         //    camera5.BackColor = Color.LawnGreen;
         //} 
 
-        private void resetBackColor()        
+        private void resetBackColor()
         {
             foreach (Control button in panel2.Controls)
             {
@@ -177,6 +174,7 @@ namespace LightStage
                     //}
                     img.Save(pictureDirectory + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".jpg");
                     try { img.Dispose(); } catch { }
+
                     MessageBox.Show("Imagem 1 salva");
                 }
                 catch { }
@@ -234,7 +232,7 @@ namespace LightStage
 
             }
             else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -254,8 +252,180 @@ namespace LightStage
 
         private void btnSair_Click(object sender, EventArgs e)
         {
+            CloseCurrentVideoSource();
             Close();
         }
+
+        private FilterInfoCollection VideoCaptureDevices;
+
+        private VideoCaptureDevice FinalVideo = null;
+        private VideoCaptureDeviceForm captureDevice;
+
+        private Bitmap video;
+        //private AVIWriter AVIwriter = new AVIWriter();
+        public VideoFileWriter FileWriter = new VideoFileWriter();
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //-----------------RECORD
+            VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            captureDevice = new VideoCaptureDeviceForm();
+            //-----------------RECORD
+        }
+
+        private void OpenVideoSource(IVideoSource source)
+        {
+            // set busy cursor
+            this.Cursor = Cursors.WaitCursor;
+
+            // stop current video source
+            CloseCurrentVideoSource();
+
+            // start new video source
+            videoSourcePlayer.VideoSource = source;
+            videoSourcePlayer.Start();
+
+            // reset stop watch
+            //stopWatch = null;
+
+            // start timer
+            //timer.Start();
+
+            this.Cursor = Cursors.Default;
+        }
+
+        private void CloseCurrentVideoSource()
+        {
+            if (videoSourcePlayer.VideoSource != null)
+            {
+                videoSourcePlayer.SignalToStop();
+
+                // wait ~ 3 seconds
+                for (int i = 0; i < 30; i++)
+                {
+                    if (!videoSourcePlayer.IsRunning)
+                        break;
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                if (videoSourcePlayer.IsRunning)
+                {
+                    videoSourcePlayer.Stop();
+                }
+
+                videoSourcePlayer.VideoSource = null;
+            }
+        }
+        private void Filmar_Click(object sender, EventArgs e)
+        {
+            if (serialTextBox.Text.Length >= 1 && userTextBox.Text.Length >= 1)
+            {
+                if (Parar.Text == "Desligar")
+                {
+                    //saveAvi = new SaveFileDialog();
+                    //saveAvi.Filter = "Avi Files (*.avi)|*.avi";
+                    //if (saveAvi.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    //{
+                    int h = captureDevice.VideoDevice.VideoResolution.FrameSize.Height;
+                    int w = captureDevice.VideoDevice.VideoResolution.FrameSize.Width;
+                    FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"], w, h, 25, VideoCodec.Default, 5000000);
+                    FileWriter.WriteVideoFrame(video);
+
+                    Filmar.Enabled = false;
+                    Parar.Text = "Parar";
+                    //}
+                }
+            }
+            else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
+        }
+
+        void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            if (Parar.Text == "Parar")
+            {
+                
+                video = (Bitmap)eventArgs.Frame.Clone();
+                //pictureBox1.Image = (Bitmap)eventArgs.Frame.Clone();
+                //AVIwriter.Quality = 0;
+                FileWriter.WriteVideoFrame(video);
+                //AVIwriter.AddFrame(video);
+            }
+            else //Stop
+            {
+                video = (Bitmap)eventArgs.Frame.Clone();
+                //pictureBox1.Image = (Bitmap)eventArgs.Frame.Clone();
+            }
+        }
+
+        private void Parar_Click(object sender, EventArgs e)
+        {
+            
+            if (Parar.Text == "Parar")
+            {
+                Parar.Text = "Desligar";
+                Filmar.Enabled = true;
+                if (FinalVideo == null)
+                { return; }
+                if (FinalVideo.IsRunning)
+                {
+                    //this.FinalVideo.Stop();
+                    FileWriter.Close();
+                    //this.AVIwriter.Close();
+                    //pictureBox1.Image = null;
+                }
+            }
+
+            else if (Parar.Text == "Desligar")
+            {               
+                FileWriter.Close();
+                Parar.Enabled = false;
+                Ligar.Enabled = true;
+                button1.Enabled = true;
+                Filmar.Enabled = false;
+                videoSourcePlayer.Visible = false;
+                CloseCurrentVideoSource();
+                capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
+                capture0.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera1X"]));
+                capture0.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera1Y"]));
+
+                capture1 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera2"]), VideoCapture.API.DShow);
+                capture1.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2X"]));
+                capture1.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2Y"]));
+
+                //this.AVIwriter.Close();
+                //pictureBox1.Image = null;
+            }
+            else
+            {
+                this.FinalVideo.Stop();
+            }
+        }
+
+        private void Ligar_Click(object sender, EventArgs e)
+        {
+            captureDevice = new VideoCaptureDeviceForm();
+
+            if (captureDevice.ShowDialog(this) == DialogResult.OK) 
+            {
+                capture0.Dispose();
+                capture1.Dispose();
+                videoSourcePlayer.Visible = true;
+                Parar.Enabled = true; 
+                Ligar.Enabled = false;
+                button1.Enabled = false;
+                Filmar.Enabled = true;
+
+                // create video source
+                FinalVideo = captureDevice.VideoDevice;
+
+                // open it
+                OpenVideoSource(FinalVideo);
+                FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                FinalVideo.Start();
+            }
+            
+        }
+
 
 
         //public Mat waterMarkImage(Mat imageMat)
