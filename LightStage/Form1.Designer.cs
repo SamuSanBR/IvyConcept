@@ -69,7 +69,7 @@
             this.button1.Location = new System.Drawing.Point(3262, 8);
             this.button1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(261, 33);
+            this.button1.Size = new System.Drawing.Size(522, 64);
             this.button1.TabIndex = 5;
             this.button1.Text = "Tirar foto";
             this.button1.UseVisualStyleBackColor = true;
@@ -77,8 +77,8 @@
             // 
             // serialTextBox
             // 
-            this.serialTextBox.Location = new System.Drawing.Point(21, 34);
-            this.serialTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.serialTextBox.Location = new System.Drawing.Point(42, 66);
+            this.serialTextBox.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.serialTextBox.Name = "serialTextBox";
             this.serialTextBox.Size = new System.Drawing.Size(380, 38);
             this.serialTextBox.TabIndex = 1;
@@ -88,9 +88,10 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 14);
+            this.label1.Location = new System.Drawing.Point(42, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 20);
+            this.label1.Size = new System.Drawing.Size(247, 39);
             this.label1.TabIndex = 7;
             this.label1.Text = "Serial number :";
             // 
@@ -143,7 +144,7 @@
             this.label2.Location = new System.Drawing.Point(442, 27);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 20);
+            this.label2.Size = new System.Drawing.Size(192, 39);
             this.label2.TabIndex = 9;
             this.label2.Text = "Username :";
             // 
@@ -242,20 +243,9 @@
             this.videoSourcePlayer.Text = "videoSourcePlayer1";
             this.videoSourcePlayer.VideoSource = null;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 7);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(261, 33);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Gerar relatório";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(3798, 1548);
