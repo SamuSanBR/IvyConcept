@@ -24,12 +24,15 @@ namespace LightStage
         //VideoCapture capture2 = null;
         //VideoCapture capture3 = null;
         //VideoCapture capture4 = null;
+        int h, m, s;
 
         public Form1()
         {
             InitializeComponent();
             videoSourcePlayer.Visible = false;
             CloseCurrentVideoSource();
+
+            
 
             User user = new User();
             userTextBox.Text = User.username.ToUpper();
@@ -322,13 +325,14 @@ namespace LightStage
             {
                 if (Parar.Text == "Desligar")
                 {
+                    timer.Start();
                     //saveAvi = new SaveFileDialog();
                     //saveAvi.Filter = "Avi Files (*.avi)|*.avi";
                     //if (saveAvi.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     //{
                     int h = captureDevice.VideoDevice.VideoResolution.FrameSize.Height;
                     int w = captureDevice.VideoDevice.VideoResolution.FrameSize.Width;
-                    FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"], w, h, 25, VideoCodec.Default, 5000000);
+                    FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".avi", w, h, 25, VideoCodec.Default, 5000000);
                     FileWriter.WriteVideoFrame(video);
 
                     Filmar.Enabled = false;
@@ -343,7 +347,6 @@ namespace LightStage
         {
             if (Parar.Text == "Parar")
             {
-                
                 video = (Bitmap)eventArgs.Frame.Clone();
                 //pictureBox1.Image = (Bitmap)eventArgs.Frame.Clone();
                 //AVIwriter.Quality = 0;
@@ -362,6 +365,11 @@ namespace LightStage
             
             if (Parar.Text == "Parar")
             {
+                timer.Stop();
+                s = 0;
+                m = 0;
+                h = 0;
+                txtTimer.Text = "00:00:00";
                 Parar.Text = "Desligar";
                 Filmar.Enabled = true;
                 if (FinalVideo == null)
@@ -401,6 +409,22 @@ namespace LightStage
             }
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            s += 1;
+            if (s == 60)
+            {
+                s = 0;
+                m += 1;
+            }
+            if (m == 60)
+            {
+                m = 0;
+                h += 1;
+            }
+            txtTimer.Text = string.Format("{0}:{1}:{2}", h.ToString().PadLeft(2, '0'), m.ToString().PadLeft(2, '0'), s.ToString().PadLeft(2, '0'));
+        }
+
         private void Ligar_Click(object sender, EventArgs e)
         {
             captureDevice = new VideoCaptureDeviceForm();
@@ -426,10 +450,7 @@ namespace LightStage
             
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        
 
 
 

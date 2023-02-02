@@ -34,6 +34,7 @@
             this.serialTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtTimer = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.imageBox2 = new Emgu.CV.UI.ImageBox();
             this.videoSourcePlayer = new AForge.Controls.VideoSourcePlayer();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -97,6 +99,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txtTimer);
             this.panel1.Controls.Add(this.btnSair);
             this.panel1.Controls.Add(this.btnLogout);
             this.panel1.Controls.Add(this.label2);
@@ -111,7 +114,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(3798, 163);
             this.panel1.TabIndex = 11;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // txtTimer
+            // 
+            this.txtTimer.Location = new System.Drawing.Point(867, 66);
+            this.txtTimer.Name = "txtTimer";
+            this.txtTimer.ReadOnly = true;
+            this.txtTimer.Size = new System.Drawing.Size(187, 38);
+            this.txtTimer.TabIndex = 11;
+            this.txtTimer.Text = "00:00:00";
+            this.txtTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnSair
             // 
@@ -243,6 +255,11 @@
             this.videoSourcePlayer.Text = "videoSourcePlayer1";
             this.videoSourcePlayer.VideoSource = null;
             // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -291,6 +308,8 @@
         private System.Windows.Forms.Button Parar;
         private System.Windows.Forms.Button Ligar;
         private AForge.Controls.VideoSourcePlayer videoSourcePlayer;
+        private System.Windows.Forms.TextBox txtTimer;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
