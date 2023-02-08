@@ -12,6 +12,7 @@ using AForge.Video.DirectShow;
 using Accord.Video.FFMPEG;
 using AForge.Controls;
 using Emgu.CV.UI;
+using System.Linq;
 
 namespace LightStage
 {
@@ -25,7 +26,6 @@ namespace LightStage
         //VideoCapture capture3 = null;
         //VideoCapture capture4 = null;
         int h, m, s;
-
         public Form1()
         {
             InitializeComponent();
@@ -274,6 +274,7 @@ namespace LightStage
             VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             captureDevice = new VideoCaptureDeviceForm();
             //-----------------RECORD
+
         }
 
         private void OpenVideoSource(IVideoSource source)
@@ -330,9 +331,7 @@ namespace LightStage
                     //saveAvi.Filter = "Avi Files (*.avi)|*.avi";
                     //if (saveAvi.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     //{
-                    int h = captureDevice.VideoDevice.VideoResolution.FrameSize.Height;
-                    int w = captureDevice.VideoDevice.VideoResolution.FrameSize.Width;
-                    FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".avi", w, h, 25, VideoCodec.Default, 5000000);
+                    
                     FileWriter.WriteVideoFrame(video);
 
                     Filmar.Enabled = false;
@@ -427,10 +426,13 @@ namespace LightStage
 
         private void Ligar_Click(object sender, EventArgs e)
         {
-            captureDevice = new VideoCaptureDeviceForm();
+            VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            VideoCaptureDevice videoSource = new VideoCaptureDevice(VideoCaptureDevices[0].MonikerString);
 
-            if (captureDevice.ShowDialog(this) == DialogResult.OK) 
-            {
+            //captureDevice = new VideoCaptureDeviceForm();
+
+            //if (captureDevice.ShowDialog(this) == DialogResult.OK)
+            //{
                 capture0.Dispose();
                 capture1.Dispose();
                 videoSourcePlayer.Visible = true;
@@ -439,15 +441,20 @@ namespace LightStage
                 button1.Enabled = false;
                 Filmar.Enabled = true;
 
-                // create video source
-                FinalVideo = captureDevice.VideoDevice;
+            // create video source
+            FinalVideo = videoSource;
 
-                // open it
-                OpenVideoSource(FinalVideo);
+            FinalVideo.VideoResolution = FinalVideo.VideoCapabilities.First();
+            int h = FinalVideo.VideoResolution.FrameSize.Height;
+            int w = FinalVideo.VideoResolution.FrameSize.Width;
+            FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".avi", w, h, 25, VideoCodec.Default, 5000000);
+
+            // open it
+            OpenVideoSource(FinalVideo);
                 FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
                 FinalVideo.Start();
-            }
-            
+            //}
+
         }
 
         
