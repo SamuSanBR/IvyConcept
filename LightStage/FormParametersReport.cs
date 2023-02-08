@@ -87,7 +87,7 @@ namespace LightStage
         private void ExibeArquivosDaPastaSelecionada(string pasta)
         {
             String pastaOrigem = pasta;
-            var filtros = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
+            var filtros = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "avi" };
             var arquivos = GetArquivosDaPasta(pastaOrigem, filtros, false, txtSerial.Text);
             //Cria um DataTable com os dados dos arquivos
             DataTable tabela = new DataTable();
@@ -162,7 +162,7 @@ namespace LightStage
         private void CopyFiles(string pasta, string PastaDestino)
         {
             String pastaOrigem = pasta;
-            var filtros = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
+            var filtros = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "avi" };
             var arquivos = GetArquivosDaPasta(pastaOrigem, filtros, false, txtSerial.Text);
             string NovoNomeArquivo;
 
