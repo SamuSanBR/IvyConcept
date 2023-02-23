@@ -123,7 +123,6 @@ namespace LightStage
             dgvDados.CellBorderStyle = DataGridViewCellBorderStyle.Single;
             dgvDados.GridColor = Color.Black;
             dgvDados.RowHeadersVisible = false;
-            //define 3 colunas : codigo, nome e nascimento
             dgvDados.Columns[0].Name = "Nome do Arquivo";
             //dgvDados.Columns[0].Width = 200;
             dgvDados.Columns[0].ReadOnly = true;
@@ -138,8 +137,17 @@ namespace LightStage
                 string nomeImagem = dgvDados.CurrentRow.Cells[0].Value.ToString();
                 string caminhoImagem = fbd1.SelectedPath + "\\" + nomeImagem;
                 txtDiretorio.Text = caminhoImagem;
-                Form2 frmImagem = new Form2(caminhoImagem);
-                frmImagem.Show();
+                try
+                {
+                    Form2 frmImagem = new Form2(caminhoImagem);
+                    frmImagem.Show();
+                }
+                catch
+                {
+                    Form3 frmVideo = new Form3(caminhoImagem);
+                    frmVideo.Show();
+                }
+                
             }
             catch (Exception ex)
             {

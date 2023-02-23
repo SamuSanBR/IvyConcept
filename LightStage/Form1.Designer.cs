@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.button1 = new System.Windows.Forms.Button();
             this.serialTextBox = new System.Windows.Forms.TextBox();
@@ -47,10 +48,12 @@
             this.imageBox2 = new Emgu.CV.UI.ImageBox();
             this.videoSourcePlayer = new AForge.Controls.VideoSourcePlayer();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.RecordingGif = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).BeginInit();
             this.SuspendLayout();
             // 
             // imageBox1
@@ -99,6 +102,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.RecordingGif);
             this.panel1.Controls.Add(this.txtTimer);
             this.panel1.Controls.Add(this.btnSair);
             this.panel1.Controls.Add(this.btnLogout);
@@ -260,6 +264,17 @@
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // RecordingGif
+            // 
+            this.RecordingGif.Image = ((System.Drawing.Image)(resources.GetObject("RecordingGif.Image")));
+            this.RecordingGif.Location = new System.Drawing.Point(1085, 56);
+            this.RecordingGif.Name = "RecordingGif";
+            this.RecordingGif.Size = new System.Drawing.Size(179, 59);
+            this.RecordingGif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RecordingGif.TabIndex = 12;
+            this.RecordingGif.TabStop = false;
+            this.RecordingGif.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -286,6 +301,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -310,6 +326,7 @@
         private AForge.Controls.VideoSourcePlayer videoSourcePlayer;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.PictureBox RecordingGif;
     }
 }
 

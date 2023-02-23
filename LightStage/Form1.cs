@@ -336,6 +336,7 @@ namespace LightStage
 
                     Filmar.Enabled = false;
                     Parar.Text = "Parar";
+                    RecordingGif.Visible = true;
                     //}
                 }
             }
@@ -380,6 +381,8 @@ namespace LightStage
                     //this.AVIwriter.Close();
                     //pictureBox1.Image = null;
                 }
+                RecordingGif.Visible = false;
+                MessageBox.Show("Gravação Salva");
             }
 
             else if (Parar.Text == "Desligar")
