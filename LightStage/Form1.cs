@@ -243,6 +243,7 @@ namespace LightStage
             FormParametersReport fpr = new FormParametersReport();
             Hide();
             fpr.ShowDialog();
+            Close();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

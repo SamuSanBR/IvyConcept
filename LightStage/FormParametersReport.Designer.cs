@@ -163,11 +163,10 @@
             this.MinimizeBox = false;
             this.Name = "FormParametersReport";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.ShowInTaskbar = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clique em Pesquisar para mostrar as imagens. Clique 2 vezes na imagem para seleci" +
     "onar";
-            this.Load += new System.EventHandler(this.FormParametersReport_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).EndInit();

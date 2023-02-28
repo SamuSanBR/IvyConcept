@@ -162,11 +162,6 @@ namespace LightStage
 
         }
 
-        private void FormParametersReport_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void CopyFiles(string pasta, string PastaDestino)
         {
             String pastaOrigem = pasta;

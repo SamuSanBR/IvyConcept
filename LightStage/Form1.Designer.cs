@@ -35,6 +35,7 @@
             this.serialTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.RecordingGif = new System.Windows.Forms.PictureBox();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
@@ -48,12 +49,11 @@
             this.imageBox2 = new Emgu.CV.UI.ImageBox();
             this.videoSourcePlayer = new AForge.Controls.VideoSourcePlayer();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.RecordingGif = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).BeginInit();
             this.SuspendLayout();
             // 
             // imageBox1
@@ -96,7 +96,7 @@
             this.label1.Location = new System.Drawing.Point(42, 27);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(247, 39);
+            this.label1.Size = new System.Drawing.Size(123, 20);
             this.label1.TabIndex = 7;
             this.label1.Text = "Serial number :";
             // 
@@ -118,6 +118,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(3798, 163);
             this.panel1.TabIndex = 11;
+            // 
+            // RecordingGif
+            // 
+            this.RecordingGif.Image = ((System.Drawing.Image)(resources.GetObject("RecordingGif.Image")));
+            this.RecordingGif.Location = new System.Drawing.Point(1085, 56);
+            this.RecordingGif.Name = "RecordingGif";
+            this.RecordingGif.Size = new System.Drawing.Size(179, 59);
+            this.RecordingGif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RecordingGif.TabIndex = 12;
+            this.RecordingGif.TabStop = false;
+            this.RecordingGif.Visible = false;
             // 
             // txtTimer
             // 
@@ -160,7 +171,7 @@
             this.label2.Location = new System.Drawing.Point(442, 27);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(192, 39);
+            this.label2.Size = new System.Drawing.Size(96, 20);
             this.label2.TabIndex = 9;
             this.label2.Text = "Username :";
             // 
@@ -181,7 +192,7 @@
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 1436);
+            this.panel2.Location = new System.Drawing.Point(0, 939);
             this.panel2.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.panel2.MaximumSize = new System.Drawing.Size(3798, 112);
             this.panel2.MinimumSize = new System.Drawing.Size(3798, 112);
@@ -264,23 +275,12 @@
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // RecordingGif
-            // 
-            this.RecordingGif.Image = ((System.Drawing.Image)(resources.GetObject("RecordingGif.Image")));
-            this.RecordingGif.Location = new System.Drawing.Point(1085, 56);
-            this.RecordingGif.Name = "RecordingGif";
-            this.RecordingGif.Size = new System.Drawing.Size(179, 59);
-            this.RecordingGif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RecordingGif.TabIndex = 12;
-            this.RecordingGif.TabStop = false;
-            this.RecordingGif.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(3798, 1548);
+            this.ClientSize = new System.Drawing.Size(1920, 1051);
             this.Controls.Add(this.videoSourcePlayer);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -290,7 +290,7 @@
             this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.MaximumSize = new System.Drawing.Size(3834, 1640);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(3834, 1640);
+            this.MinimumSize = new System.Drawing.Size(1918, 1028);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -299,9 +299,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RecordingGif)).EndInit();
             this.ResumeLayout(false);
 
         }
