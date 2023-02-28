@@ -40,8 +40,9 @@
             this.txtUsername.Location = new System.Drawing.Point(186, 161);
             this.txtUsername.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(476, 53);
+            this.txtUsername.Size = new System.Drawing.Size(476, 30);
             this.txtUsername.TabIndex = 9;
+            this.txtUsername.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnLogin_KeyDown);
             // 
             // lblLogin
             // 
@@ -50,7 +51,7 @@
             this.lblLogin.Location = new System.Drawing.Point(176, 60);
             this.lblLogin.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(499, 46);
+            this.lblLogin.Size = new System.Drawing.Size(246, 25);
             this.lblLogin.TabIndex = 10;
             this.lblLogin.Text = "Insira seu nome de usuário";
             // 

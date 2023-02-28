@@ -27,6 +27,12 @@ namespace LightStage
             public static string username { get; set; }
         }
 
+        private void btnLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            btnLogin_Click(sender, e);
+        }
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             try
