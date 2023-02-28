@@ -325,7 +325,7 @@ namespace LightStage
         {
             if (serialTextBox.Text.Length >= 1 && userTextBox.Text.Length >= 1)
             {
-                if (Parar.Text == "Desligar")
+                if (Parar.Text == "Foto")
                 {
                     timer.Start();
                     //saveAvi = new SaveFileDialog();
@@ -371,7 +371,7 @@ namespace LightStage
                 m = 0;
                 h = 0;
                 txtTimer.Text = "00:00:00";
-                Parar.Text = "Desligar";
+                Parar.Text = "Foto";
                 Filmar.Enabled = true;
                 if (FinalVideo == null)
                 { return; }
@@ -386,7 +386,7 @@ namespace LightStage
                 MessageBox.Show("Gravação Salva");
             }
 
-            else if (Parar.Text == "Desligar")
+            else if (Parar.Text == "Foto")
             {               
                 FileWriter.Close();
                 Parar.Enabled = false;

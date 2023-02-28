@@ -208,7 +208,7 @@
             this.Ligar.Name = "Ligar";
             this.Ligar.Size = new System.Drawing.Size(368, 64);
             this.Ligar.TabIndex = 10;
-            this.Ligar.Text = "Ligar";
+            this.Ligar.Text = "Video";
             this.Ligar.UseVisualStyleBackColor = true;
             this.Ligar.Click += new System.EventHandler(this.Ligar_Click);
             // 
@@ -221,7 +221,7 @@
             this.Parar.Name = "Parar";
             this.Parar.Size = new System.Drawing.Size(368, 64);
             this.Parar.TabIndex = 9;
-            this.Parar.Text = "Desligar";
+            this.Parar.Text = "Foto";
             this.Parar.UseVisualStyleBackColor = true;
             this.Parar.Click += new System.EventHandler(this.Parar_Click);
             // 
