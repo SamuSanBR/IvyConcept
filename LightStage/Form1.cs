@@ -394,6 +394,7 @@ namespace LightStage
                 button1.Enabled = true;
                 Filmar.Enabled = false;
                 videoSourcePlayer.Visible = false;
+                serialTextBox.Enabled = true;
                 CloseCurrentVideoSource();
                 capture0 = new VideoCapture(Convert.ToInt16(ConfigurationManager.AppSettings["Camera1"]), VideoCapture.API.DShow);
                 capture0.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera1X"]));
@@ -403,6 +404,7 @@ namespace LightStage
                 capture1.SetCaptureProperty(CapProp.FrameWidth, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2X"]));
                 capture1.SetCaptureProperty(CapProp.FrameHeight, Convert.ToInt16(ConfigurationManager.AppSettings["Camera2Y"]));
 
+                
                 //this.AVIwriter.Close();
                 //pictureBox1.Image = null;
             }
@@ -430,6 +432,9 @@ namespace LightStage
 
         private void Ligar_Click(object sender, EventArgs e)
         {
+            if (serialTextBox.Text.Length >= 1 && userTextBox.Text.Length >= 1)
+            {
+          
             VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             VideoCaptureDevice videoSource = new VideoCaptureDevice(VideoCaptureDevices[0].MonikerString);
 
@@ -452,11 +457,14 @@ namespace LightStage
             int h = FinalVideo.VideoResolution.FrameSize.Height;
             int w = FinalVideo.VideoResolution.FrameSize.Width;
             FileWriter.Open(ConfigurationManager.AppSettings["SavePath"] + "\\" + serialTextBox.Text.ToUpper() + "_" + userTextBox.Text.ToUpper() + ConfigurationManager.AppSettings["AppendCam1"] + ".avi", w, h, 25, VideoCodec.Default, 5000000);
-
+            serialTextBox.Enabled = false;
             // open it
             OpenVideoSource(FinalVideo);
                 FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
                 FinalVideo.Start();
+
+            }
+            else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
             //}
 
         }
