@@ -36,7 +36,7 @@
             // 
             this.picImagem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picImagem.Location = new System.Drawing.Point(0, 0);
-            this.picImagem.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.picImagem.Margin = new System.Windows.Forms.Padding(8);
             this.picImagem.Name = "picImagem";
             this.picImagem.Size = new System.Drawing.Size(1356, 930);
             this.picImagem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -49,9 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1356, 930);
             this.Controls.Add(this.picImagem);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form2";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
