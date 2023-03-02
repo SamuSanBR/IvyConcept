@@ -234,7 +234,7 @@ namespace LightStage
                 if (ConfigurationManager.AppSettings["ClearTextAfterCapture"].ToUpper() == "TRUE") { serialTextBox.Text = ""; }
 
             }
-            else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
+            else { MessageBox.Show("Serial Number não pode ser vazio", "Aviso"); }
 
         }
 
@@ -257,7 +257,9 @@ namespace LightStage
         private void btnSair_Click(object sender, EventArgs e)
         {
             CloseCurrentVideoSource();
+            FileWriter.Close();
             Close();
+
         }
 
         private FilterInfoCollection VideoCaptureDevices;
@@ -341,7 +343,7 @@ namespace LightStage
                     //}
                 }
             }
-            else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
+            else { MessageBox.Show("Serial Number não pode ser vazio", "Aviso"); }
         }
 
         void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -464,7 +466,7 @@ namespace LightStage
                 FinalVideo.Start();
 
             }
-            else { MessageBox.Show("Serial Number não pode ser vazio", "Warning"); }
+            else { MessageBox.Show("Serial Number não pode ser vazio", "Aviso"); }
             //}
 
         }
